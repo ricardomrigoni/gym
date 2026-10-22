@@ -273,10 +273,35 @@ textarea{width:100%;min-height:96px;border:1px solid var(--line);border-radius:1
 .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13.5px}
 .kv span:nth-child(odd){color:var(--faint)}
 .kv span:nth-child(even){color:var(--ink);font-weight:600;min-width:0;overflow-wrap:anywhere}
+.srow .n{display:grid;justify-items:center;gap:2px;line-height:1}
+.srow .n small{font:600 10px/1 var(--f-mono);color:var(--faint)}
+.pyr{margin:0;font-size:13px;color:var(--muted);background:var(--raise);border-radius:10px;padding:8px 10px}
+.pyr b{color:var(--accent)}
+.info summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;border:1px solid var(--line);border-radius:10px;padding:7px 12px 7px 8px}
+.info summary::-webkit-details-marker{display:none}
+.info[open] summary{background:var(--raise)}
+.ii{width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:800 13px/1 Georgia,serif;font-style:italic}
+.infob{display:grid;gap:12px;margin-top:10px;background:var(--raise);border-radius:14px;padding:12px}
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stages figure{margin:0;display:grid;gap:4px;justify-items:center}
+.sth{width:100%;aspect-ratio:1;max-width:100%;background:var(--surface);border-radius:10px;overflow:hidden;display:block}
+.stages figcaption{font:700 10.5px/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.isec{display:grid;gap:4px}
+.isec h4{margin:0;font:700 15px/1 var(--f-display);text-transform:uppercase;letter-spacing:.03em;color:var(--accent)}
+.isec.bad h4{color:var(--bad)}
+.isec ul,.isec ol{margin:0;padding-left:18px;display:grid;gap:4px;font-size:13.5px}
+.isec p{margin:0;font-size:13.5px}
+.evo{display:flex;flex-wrap:wrap;gap:6px}
+.evo span{display:grid;gap:1px;background:var(--surface);border-radius:8px;padding:6px 9px}
+.evo b{font:700 14px var(--f-mono)}
+.evo i{font-style:normal;font-size:11px;color:var(--faint)}
 /* figuras */
 .fig{width:100%;height:100%;display:block}
-.fig .lb{stroke:var(--ink);stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round;fill:none}
-.fig .far{opacity:.32}
+.fig .lb{stroke:var(--ink);stroke-width:8;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.fig .tr{stroke-width:14}
+.fig .gd{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:5 4;opacity:.8}
+.fig .gdt{fill:var(--accent);font:700 9px var(--f-body);letter-spacing:.04em}
+.fig .far{opacity:.28}
 .fig .hd{fill:var(--ink)}
 .fig .eq{stroke:var(--faint);stroke-width:2.5;fill:none;stroke-linecap:round}
 .fig .bn{stroke:var(--faint);stroke-width:7;stroke-linecap:round;opacity:.5}
@@ -355,8 +380,8 @@ const FIG = {
    b:{h:[80,22],s:[80,36],p:[80,82],k1:[82,110],a1:[86,128],e1:[70,48],w1:[76,34]}, props:[{k:"padL",at:"s",dy:-5}]},
  /* C */
  shoulderMach:{eq:SEAT_UP+'<line class="eq" x1="50" y1="10" x2="50" y2="58"/><line class="eq" x1="50" y1="12" x2="88" y2="12"/>', a:{...USEAT,e1:[80,84],w1:[84,62]}, b:{e1:[76,40],w1:[78,18]}, props:[{k:"handle",at:"w1"}]},
- latRaise:{v:"front", a:{...FRONT,e1:[96,70],w1:[98,92],e2:[64,70],w2:[62,92]}, b:{e1:[114,52],w1:[134,58],e2:[46,52],w2:[26,58]}, props:[{k:"db",at:"w1"},{k:"db",at:"w2"}]},
- revPeck:{v:"front",eq:SEAT_FRONT, a:{...FSEAT,e1:[100,58],w1:[88,60],e2:[60,58],w2:[72,60]}, b:{e1:[114,56],w1:[136,56],e2:[46,56],w2:[24,56]}, props:[{k:"grip",at:"w1"},{k:"grip",at:"w2"}]},
+ latRaise:{v:"front", gd:[[8,50,152,50,"ombro"]], a:{...FRONT,e1:[96,70],w1:[98,92],e2:[64,70],w2:[62,92]}, b:{e1:[114,52],w1:[134,58],e2:[46,52],w2:[26,58]}, props:[{k:"db",at:"w1"},{k:"db",at:"w2"}]},
+ revPeck:{v:"front", gd:[[8,56,152,56,"ombro"]],eq:SEAT_FRONT, a:{...FSEAT,e1:[100,58],w1:[88,60],e2:[60,58],w2:[72,60]}, b:{e1:[114,56],w1:[136,56],e2:[46,56],w2:[24,56]}, props:[{k:"grip",at:"w1"},{k:"grip",at:"w2"}]},
  bayes:{eq:LOW(16,12), a:{h:[94,32],s:[92,46],p:[90,94],k1:[96,120],a1:[100,148],k2:[84,120],a2:[80,148],e1:[84,68],w1:[76,90],e2:[94,70],w2:[96,92]}, b:{w1:[100,56]},
    props:[{k:"cable",at:"w1",to:[16,140]},{k:"handle",at:"w1"}]},
  frenchRope:{eq:LOW(16,12),
@@ -401,84 +426,249 @@ const FIG = {
 /* ---------- plano v4 ----------
    fo = foco principal · se = músculos secundários
    pre = aprovado na v3 (vem marcado) · chg = trocado nesta versão */
+/* ---------- detalhamento de execução (aba "Mais informações") ----------
+   aj = ajuste e posição · pg = pegada, braços e ombros · am = amplitude · er = erros comuns */
+const DETAIL={
+ "Supino inclinado com barra":{
+  aj:["Banco em 30° (2 ou 3 furos). Mais inclinado vira exercício de ombro.","Olhos logo abaixo da barra no suporte.","Pés inteiros no chão, um pouco mais abertos que o quadril e firmes a série toda."],
+  pg:["Mãos um pouco mais abertas que os ombros. Embaixo, os antebraços ficam na vertical.","Polegar sempre envolvendo a barra.","Escápulas apertadas e encaixadas no banco, peito estufado, ombros longe das orelhas.","Cotovelos a uns 45–60° do tronco, não abertos em 90°."],
+  am:["Desça até a barra tocar de leve a parte alta do peito, logo abaixo da clavícula.","Suba até quase esticar os braços, sem travar os cotovelos."],
+  er:["Quicar a barra no peito.","Tirar o quadril do banco para empurrar.","Abrir os cotovelos na linha dos ombros (força a articulação)."]},
+ "Crucifixo inclinado na máquina articulada":{
+  aj:["Banco ajustado para os pegadores ficarem na altura do meio do peito.","Costas e cabeça encostadas, pés firmes."],
+  pg:["Cotovelos levemente dobrados e fixos nesse ângulo do início ao fim.","Ombros para trás e para baixo. Não deixe o ombro ir para a frente no fechamento."],
+  am:["Abra até sentir o peito alongar, com as mãos mais ou menos na linha do corpo, não atrás dela.","Feche até as mãos quase se tocarem e segure 1s."],
+  er:["Dobrar e esticar os cotovelos (vira um supino).","Abrir demais e sentir na frente do ombro."]},
+ "Remada articulada com apoio no peito":{
+  aj:["Banco ajustado para o apoio ficar na altura do peito, não da barriga.","Peito colado no apoio a série inteira, pés firmes."],
+  pg:["Pegada pronada (palmas para baixo) puxa mais o meio das costas.","Antes de dobrar os braços, leve os ombros para trás apertando as escápulas."],
+  am:["Puxe até os cotovelos passarem um pouco a linha do tronco.","Volte até esticar os braços e sentir as escápulas se afastarem."],
+  er:["Tirar o peito do apoio para dar tranco.","Encolher os ombros em direção às orelhas."]},
+ "Puxada supinada pegada fechada":{
+  aj:["Rolo prendendo as coxas firme, pés no chão.","Sente bem embaixo da polia, tronco levemente inclinado para trás (uns 10–15°)."],
+  pg:["Palmas viradas para você, mãos na largura dos ombros.","Comece descendo os ombros, depois puxe com os cotovelos."],
+  am:["Puxe até a barra chegar entre o queixo e a parte alta do peito.","Suba até os braços esticarem totalmente, sentindo as costas alongarem."],
+  er:["Jogar o tronco para trás para ajudar.","Parar a subida no meio do caminho."]},
+ "Pullover na polia com corda":{
+  aj:["Um a dois passos atrás da polia alta, pés na largura do quadril, joelhos levemente dobrados.","Tronco inclinado à frente uns 30°, coluna reta."],
+  pg:["Segure a corda pelas pontas, braços quase retos, cotovelo só um pouco dobrado.","Ombros baixos, longe das orelhas."],
+  am:["Comece com as mãos na altura da cabeça e termine com a corda encostando nas coxas.","Volte devagar até sentir as costas esticarem."],
+  er:["Dobrar os cotovelos (vira tríceps).","Balançar o tronco."]},
+ "Agachamento no hack":{
+  aj:["Ombros encaixados nas almofadas, costas inteiras no encosto.","Pés no meio da plataforma, na largura dos ombros, pontas levemente para fora.","Pés mais baixos pegam mais a coxa; mais altos, mais o glúteo."],
+  pg:["Mãos nas alças laterais, só para firmar o corpo."],
+  am:["Desça até a coxa ficar pelo menos paralela à plataforma.","Joelhos apontam na mesma direção dos pés.","Suba sem travar os joelhos no topo."],
+  er:["Tirar o calcanhar da plataforma.","Descer só até a metade.","Joelhos fechando para dentro na subida."]},
+ "Leg press 45° com pés baixos":{
+  aj:["Pés na metade de baixo da plataforma, na largura do quadril.","Lombar e quadril encostados no banco a série toda."],
+  pg:["Segure as alças ao lado do banco para o quadril não sair do lugar."],
+  am:["Desça até os joelhos chegarem perto do peito, sem o quadril descolar do banco.","Empurre até quase esticar, sem travar os joelhos."],
+  er:["Quadril saindo do banco no fundo (enrola a lombar).","Calcanhar descolando da plataforma."]},
+ "Cadeira extensora":{
+  aj:["Encosto ajustado para o joelho ficar alinhado com o eixo da máquina.","Rolo na frente do tornozelo, logo acima do pé."],
+  pg:["Segure as alças laterais e mantenha o quadril colado no banco."],
+  am:["Estique as pernas até em cima e segure 1s.","Desça devagar, sem deixar o peso bater."],
+  er:["Dar impulso e chutar o peso.","Levantar o quadril do banco."]},
+ "Cadeira flexora sentada":{
+  aj:["Joelho alinhado com o eixo da máquina.","Almofada travando as coxas logo acima dos joelhos; rolo atrás do tornozelo."],
+  pg:["Segure as alças e mantenha as costas no encosto."],
+  am:["Dobre as pernas o máximo que der.","Volte até quase esticar, em 2 segundos."],
+  er:["Soltar o peso de uma vez na volta.","Almofada da coxa frouxa (a perna sobe junto)."]},
+ "Cadeira adutora":{
+  aj:["Abertura inicial em que você sente alongar, sem dor.","Costas no encosto, almofadas na parte interna dos joelhos."],
+  pg:["Mãos nas alças, tronco parado."],
+  am:["Feche até as almofadas quase se tocarem e segure 1s.","Abra devagar até a posição inicial."],
+  er:["Começar com abertura grande demais.","Bater as almofadas com força."]},
+ "Coice de glúteo na polia":{
+  aj:["Tornozeleira presa na polia baixa e no tornozelo.","De frente para a máquina, a um passo dela, segurando firme. Tronco levemente inclinado à frente."],
+  pg:["Braços estendidos segurando a máquina, ombros relaxados."],
+  am:["Leve a perna para trás e um pouco para cima, joelho quase reto, até o glúteo apertar.","Volte até o pé ficar ao lado do outro."],
+  er:["Arquear a lombar para subir mais a perna.","Girar o quadril para o lado."]},
+ "Panturrilha em pé na máquina":{
+  aj:["Ombros embaixo das almofadas, corpo reto.","Só a ponta dos pés no degrau, na largura do quadril, pontas para a frente."],
+  pg:["Mãos nas alças, sem puxar."],
+  am:["Desça o calcanhar o máximo possível e segure 2s.","Suba na ponta dos pés até o alto e segure 1s."],
+  er:["Quicar no fundo.","Dobrar os joelhos para ajudar."]},
+ "Desenvolvimento articulado na máquina":{
+  aj:["Banco ajustado para os pegadores ficarem na altura dos ombros ou um pouco abaixo.","Costas inteiras no encosto, pés firmes no chão."],
+  pg:["Punhos retos, alinhados com os antebraços.","Cotovelos levemente à frente do corpo, não totalmente para os lados."],
+  am:["Empurre até quase esticar os braços.","Desça até as mãos ficarem na altura das orelhas."],
+  er:["Arquear a lombar e tirar as costas do encosto.","Encolher os ombros no topo."]},
+ "Crucifixo invertido no peck deck":{
+  aj:["Sente virado para o encosto, peito apoiado.","Banco ajustado para os braços ficarem na altura dos ombros."],
+  pg:["Palmas uma para a outra ou para baixo, cotovelos levemente dobrados.","Ombros para baixo, sem encolher."],
+  am:["Abra até os braços ficarem na linha do corpo, sem passar para trás.","Mãos na linha do ombro, nem acima nem abaixo."],
+  er:["Juntar as escápulas com força (vira exercício de costas).","Usar impulso do tronco."]},
+ "Elevação lateral com halteres":{
+  aj:["Em pé, pés na largura do quadril, joelhos soltos.","Tronco levemente inclinado à frente (uns 10°)."],
+  pg:["Halteres ao lado do corpo, palmas para dentro.","Cotovelos levemente dobrados e fixos.","Quem sobe são os cotovelos; as mãos só acompanham."],
+  am:["Suba até os braços ficarem na linha do ombro, paralelos ao chão. Não passe disso.","Mãos na mesma altura ou um pouco abaixo dos cotovelos.","Desça em 2 segundos."],
+  er:["Balançar o corpo para jogar o peso.","Encolher os ombros (o trapézio assume o trabalho)."]},
+ "Rosca concentrada":{
+  aj:["Sente na ponta do banco, pés bem afastados.","Tronco inclinado à frente, cotovelo apoiado na parte interna da coxa."],
+  pg:["Palma para cima; gire levemente o punho para fora no topo."],
+  am:["Desça até quase esticar o braço.","Suba até o halter chegar perto do ombro e segure 1s."],
+  er:["Tirar o cotovelo da coxa.","Usar o ombro para subir."]},
+ "Rosca martelo na polia com corda":{
+  aj:["Polia na posição mais baixa, com a corda.","Um passo atrás da polia, pés na largura do quadril."],
+  pg:["Segure as pontas da corda com as palmas viradas uma para a outra.","Cotovelos colados ao lado do corpo a série inteira."],
+  am:["Suba até as mãos chegarem perto dos ombros.","Desça até quase esticar os braços."],
+  er:["Cotovelos indo para a frente.","Balançar o tronco."]},
+ "Tríceps francês na polia com corda":{
+  aj:["Mesma polia baixa e mesma corda da rosca.","De costas para a polia, um passo à frente, um pé na frente do outro para firmar."],
+  pg:["Corda atrás da cabeça, cotovelos apontando para cima e perto da cabeça.","Tronco levemente inclinado à frente."],
+  am:["Estique os braços para cima e para a frente sem mexer os cotovelos.","Volte até as mãos ficarem atrás da cabeça e sentir o tríceps alongar."],
+  er:["Abrir os cotovelos para os lados.","Arquear a lombar."]},
+ "Tríceps na polia com corda":{
+  aj:["Polia alta. De frente, perto da máquina, pés na largura do quadril.","Tronco levemente inclinado à frente."],
+  pg:["Cotovelos colados nas laterais do corpo e parados.","Punhos retos."],
+  am:["Empurre até esticar os braços e abra as pontas da corda para os lados.","Suba até os antebraços ficarem paralelos ao chão."],
+  er:["Cotovelos subindo junto na volta.","Usar o peso do corpo para empurrar."]},
+ "Leg press 45° com pés altos":{
+  aj:["Pés na parte de cima da plataforma, um pouco mais abertos que o quadril, pontas levemente para fora.","Lombar e quadril encostados no banco."],
+  pg:["Segure as alças ao lado do banco."],
+  am:["Desça fundo, joelhos perto do peito, sem o quadril descolar.","Empurre pelos calcanhares, sem travar os joelhos."],
+  er:["Quadril saindo do banco no fundo.","Joelhos fechando para dentro."]},
+ "Mesa flexora":{
+  aj:["Deite de bruços com os joelhos logo fora da borda do banco.","Rolo logo acima do calcanhar."],
+  pg:["Segure as alças e mantenha o quadril colado no banco."],
+  am:["Dobre trazendo o calcanhar em direção ao bumbum.","Desça em 2 segundos até quase esticar."],
+  er:["Levantar o quadril para ajudar.","Deixar o peso bater embaixo."]},
+ "Cadeira abdutora":{
+  aj:["Almofadas por fora dos joelhos.","Tronco um pouco à frente pega mais o glúteo; encostado, mais a lateral do quadril."],
+  pg:["Mãos nas alças."],
+  am:["Abra o máximo que der e segure 1s.","Feche devagar, sem deixar as almofadas baterem."],
+  er:["Fazer rápido e sem controle."]},
+ "Pull-through na polia":{
+  aj:["Polia baixa com corda. De costas para a polia, corda passando entre as pernas.","Dois passos à frente, pés um pouco mais abertos que o quadril."],
+  pg:["Segure a corda com as duas mãos entre as pernas, braços esticados e relaxados."],
+  am:["Empurre o quadril para trás, joelhos levemente dobrados e coluna reta, até o tronco quase ficar paralelo ao chão.","Volte empurrando o quadril para a frente e aperte o glúteo em pé."],
+  er:["Agachar em vez de levar o quadril para trás.","Puxar com os braços.","Arredondar a coluna."]},
+ "Lenhador na polia":{
+  aj:["Polia alta, mesma corda do pull-through.","De lado para a polia, pés um pouco mais abertos que os ombros."],
+  pg:["As duas mãos na corda, braços quase retos."],
+  am:["Puxe na diagonal, de cima até perto do quadril do lado oposto, girando o tronco.","O pé de trás pode girar junto. Volte controlando."],
+  er:["Puxar só com os braços, sem girar o tronco."]},
+ "Panturrilha unilateral no degrau":{
+  aj:["Ponta de um pé no degrau, calcanhar para fora, outro pé solto atrás.","Mão livre na parede ou na máquina para equilíbrio."],
+  pg:["Halter na mão do mesmo lado da perna que trabalha."],
+  am:["Desça o calcanhar o máximo possível.","Suba na ponta do pé até o alto e segure 1s."],
+  er:["Quicar no fundo.","Dobrar o joelho."]},
+ "Abdominal infra":{
+  aj:["Deitado de costas no colchonete, mãos embaixo do quadril."],
+  pg:["Cabeça e ombros apoiados no chão, relaxados."],
+  am:["Suba as pernas juntas até 90°.","Desça devagar e pare a um palmo do chão."],
+  er:["Lombar descolando do chão (se acontecer, dobre os joelhos).","Usar impulso."]},
+ "Supino reto com barra":{
+  aj:["Deitado, olhos logo abaixo da barra.","Pés inteiros no chão e firmes."],
+  pg:["Mãos um pouco mais abertas que os ombros; embaixo, antebraços na vertical.","Polegar envolvendo a barra.","Escápulas apertadas no banco, peito alto."],
+  am:["Desça até tocar de leve na linha do mamilo.","Cotovelos a 45–60° do tronco.","Suba até quase esticar."],
+  er:["Quicar no peito.","Tirar o quadril do banco.","Ir até a falha sem travas ou alguém ajudando."]},
+ "Crucifixo no peck deck":{
+  aj:["Banco ajustado para os cotovelos ficarem na altura do peito.","Costas inteiras no encosto."],
+  pg:["Antebraços nas almofadas (ou mãos nos pegadores com cotovelos levemente dobrados).","Ombros para trás e para baixo."],
+  am:["Abra até sentir o peito alongar, braços na linha do corpo.","Feche até as almofadas se encontrarem e segure 1s."],
+  er:["Ombros indo para a frente no fechamento.","Abrir para trás da linha do corpo."]},
+ "Puxada aberta pronada":{
+  aj:["Coxas presas no rolo, pés no chão.","Tronco levemente inclinado para trás."],
+  pg:["Pegada bem mais larga que os ombros, palmas para a frente.","Comece descendo os ombros, depois puxe com os cotovelos."],
+  am:["Puxe a barra até a parte alta do peito, nunca atrás da nuca.","Suba até esticar os braços."],
+  er:["Puxar atrás da cabeça.","Balançar o tronco."]},
+ "Remada baixa sentada com triângulo":{
+  aj:["Pés no apoio, joelhos levemente dobrados.","Tronco ereto, sem passar muito da vertical."],
+  pg:["Triângulo com as palmas uma para a outra, cotovelos junto ao corpo."],
+  am:["Puxe até o umbigo apertando as escápulas.","Estique os braços deixando os ombros irem um pouco à frente."],
+  er:["Jogar o tronco para trás a cada repetição.","Arredondar a coluna na volta."]},
+ "Rosca direta com barra W":{
+  aj:["Em pé, pés na largura do quadril, joelhos soltos."],
+  pg:["Mãos na parte inclinada da barra W.","Cotovelos colados nas laterais."],
+  am:["Suba até a barra chegar perto do peito.","Desça em 2 segundos até quase esticar."],
+  er:["Balançar o tronco.","Cotovelos indo para a frente."]},
+ "Tríceps na polia com barra V":{
+  aj:["Polia alta. De frente para a máquina, pés na largura do quadril."],
+  pg:["Barra V nas mãos, cotovelos colados no corpo."],
+  am:["Empurre até esticar os braços.","Suba até os antebraços ficarem paralelos ao chão."],
+  er:["Cotovelos se abrindo.","Usar o peso do corpo."]},
+};
+
 const PLAN = [
  {id:"A", day:"Seg", title:"Torso · Pesado", why:"Começa pelo supino inclinado, o exercício mais pesado e que pede mais atenção. Fecha o peito na máquina, faz a remada pesada e termina no pulley com dois exercícios seguidos, sem trocar de aparelho.",
   ex:[
-   {n:"Supino inclinado com barra", st:"Banco inclinado com barra", early:true, fig:"inclBar", fo:"Peito superior", se:"ombro frontal, tríceps", eq:"Banco inclinado + barra", m:{Peito:4,Ombros:1,Tríceps:1}, s:"4", r:"6–8", rest:"120s", tip:"Antes, uma série leve de aproximação. Banco em 30°. Use as travas de segurança do suporte ou peça ajuda na série mais pesada.",
+   {n:"Supino inclinado com barra", st:"Banco inclinado com barra", early:true, fig:"inclBar", fo:"Peito superior", se:"ombro frontal, tríceps", eq:"Banco inclinado + barra", m:{Peito:4,Ombros:1,Tríceps:1}, s:"4", r:"12/10/8/8", reps:[12,10,8,8], rest:"120s", tip:"A série de 12 é leve e já serve de aquecimento. Banco em 30°. Use as travas do suporte ou peça ajuda na série mais pesada.",
     how:["Ajuste o banco em cerca de 30° no suporte de barra.","Pegada um pouco mais aberta que os ombros, escápulas apertadas no banco.","Desça até a parte alta do peito, logo abaixo da clavícula, e empurre."], feel:"Parte superior do peito."},
-   {n:"Crucifixo inclinado na máquina articulada", st:"Máquina de crucifixo inclinado", fig:"inclFlyM", fo:"Peito superior", se:"ombro frontal", eq:"Máquina articulada", m:{Peito:3}, s:"3", r:"10–12", rest:"60s", tip:"Mesmo movimento de abraço subindo, numa máquina só sua.",
+   {n:"Crucifixo inclinado na máquina articulada", st:"Máquina de crucifixo inclinado", fig:"inclFlyM", fo:"Peito superior", se:"ombro frontal", eq:"Máquina articulada", m:{Peito:3}, s:"3", r:"12", reps:[12,12,12], rest:"60s", tip:"Mesmo movimento de abraço subindo, numa máquina só sua.",
     how:["Ajuste o banco para os pegadores ficarem na altura do peito.","Com cotovelos levemente dobrados, feche os braços em arco subindo até as mãos se aproximarem.","Abra devagar até sentir o peito alongar."], feel:"Parte superior e interna do peito."},
-   {n:"Remada articulada com apoio no peito", st:"Máquina de remada articulada", early:true, fig:"rowMach", fo:"Meio das costas", se:"dorsal, ombro posterior, bíceps", eq:"Máquina de remada articulada", m:{Costas:4,Bíceps:1}, s:"3", r:"8–10", rest:"90s", tip:"Mesmo trabalho da remada curvada, com o peito apoiado e sem esforço na lombar.",
+   {n:"Remada articulada com apoio no peito", st:"Máquina de remada articulada", early:true, fig:"rowMach", fo:"Meio das costas", se:"dorsal, ombro posterior, bíceps", eq:"Máquina de remada articulada", m:{Costas:4,Bíceps:1}, s:"3", r:"12/10/8", reps:[12,10,8], rest:"90s", tip:"Mesmo trabalho da remada curvada, com o peito apoiado e sem esforço na lombar.",
     how:["Sente com o peito encostado no apoio e segure os pegadores com os braços esticados.","Puxe levando os cotovelos para trás e apertando as escápulas.","Volte devagar até esticar os braços, sem tirar o peito do apoio."], feel:"Meio das costas, entre as escápulas."},
-   {n:"Puxada supinada pegada fechada", st:"Pulley", pre:true, fig:"pulldownSup", fo:"Dorsal", se:"bíceps", eq:"Pulley + barra reta", m:{Costas:4,Bíceps:2}, s:"4", r:"8–10", rest:"90s", tip:"Palmas viradas para você. Ao terminar, fique no mesmo pulley para o pullover.",
+   {n:"Puxada supinada pegada fechada", st:"Pulley", pre:true, fig:"pulldownSup", fo:"Dorsal", se:"bíceps", eq:"Pulley + barra reta", m:{Costas:4,Bíceps:2}, s:"4", r:"12/10/8/8", reps:[12,10,8,8], rest:"90s", tip:"Palmas viradas para você. Ao terminar, fique no mesmo pulley para o pullover.",
     how:["Sente com as coxas presas no apoio, palmas para você, mãos na largura dos ombros.","Puxe a barra até a parte alta do peito, cotovelos para baixo e junto ao corpo.","Suba controlando até esticar os braços."], feel:"Laterais das costas e bíceps."},
-   {n:"Pullover na polia com corda", st:"Pulley", fig:"pullover", fo:"Dorsal", se:"peito, tríceps (cabeça longa)", eq:"Polia alta + corda", m:{Costas:3}, s:"3", r:"12–15", rest:"60s", cable:true, tip:"No mesmo pulley da puxada: troque a barra pela corda e faça em pé. Braços quase retos.",
+   {n:"Pullover na polia com corda", st:"Pulley", fig:"pullover", fo:"Dorsal", se:"peito, tríceps (cabeça longa)", eq:"Polia alta + corda", m:{Costas:3}, s:"3", r:"12", reps:[12,12,12], rest:"60s", cable:true, tip:"No mesmo pulley da puxada: troque a barra pela corda e faça em pé. Braços quase retos.",
     how:["De frente para a polia alta, um passo atrás, tronco levemente inclinado.","Segure a corda com os braços estendidos na altura da cabeça.","Leve as mãos em arco até as coxas sem dobrar os cotovelos e volte devagar."], feel:"Dorsal, sem cansar o bíceps."},
   ]},
  {id:"B", day:"Ter", title:"Pernas · Frente", why:"Do mais pesado para o mais leve: hack e leg press primeiro, depois extensora e flexora (costumam ficar lado a lado), adutora, coice na polia e panturrilha no fim.",
   ex:[
-   {n:"Agachamento no hack", st:"Hack", early:true, pre:true, fig:"hack", fo:"Quadríceps", se:"glúteo", eq:"Hack machine", m:{Quadríceps:4,Glúteo:2}, s:"4", r:"8–10", rest:"120s", old:true, tip:"Antes, uma série leve de aproximação. Desça até a coxa passar da paralela.",
+   {n:"Agachamento no hack", st:"Hack", early:true, pre:true, fig:"hack", fo:"Quadríceps", se:"glúteo", eq:"Hack machine", m:{Quadríceps:4,Glúteo:2}, s:"4", r:"12/10/8/8", reps:[12,10,8,8], rest:"120s", old:true, tip:"Comece leve nas 12 repetições, que já aquecem. Desça até a coxa passar da paralela.",
     how:["Costas e ombros encostados nos apoios, pés no meio da plataforma.","Destrave e desça dobrando os joelhos até a coxa ficar paralela à plataforma.","Suba empurrando com o pé inteiro, sem travar os joelhos."], feel:"Frente da coxa e glúteo."},
-   {n:"Leg press 45° com pés baixos", st:"Leg press", early:true, pre:true, fig:"legPress", fo:"Quadríceps", se:"glúteo", eq:"Leg press", m:{Quadríceps:4}, s:"3", r:"10–12", rest:"90s", old:true, tip:"Pés na parte de baixo da plataforma e mais juntos: foco no quadríceps.",
+   {n:"Leg press 45° com pés baixos", st:"Leg press", early:true, pre:true, fig:"legPress", fo:"Quadríceps", se:"glúteo", eq:"Leg press", m:{Quadríceps:4}, s:"3", r:"12/10/8", reps:[12,10,8], rest:"90s", old:true, tip:"Pés na parte de baixo da plataforma e mais juntos: foco no quadríceps.",
     how:["Pés na metade de baixo da plataforma, na largura do quadril.","Desça até os joelhos chegarem perto do peito, sem tirar o quadril do banco.","Empurre sem travar os joelhos no topo."], feel:"Frente da coxa, perto do joelho."},
-   {n:"Cadeira extensora", st:"Extensora e flexora", pre:true, fig:"legExt", fo:"Quadríceps", se:"—", eq:"Extensora", m:{Quadríceps:3}, s:"3", r:"12–15", rest:"60s", old:true, tip:"Segure 1s em cima. Drop-set na última série.",
+   {n:"Cadeira extensora", st:"Extensora e flexora", pre:true, fig:"legExt", fo:"Quadríceps", se:"—", eq:"Extensora", m:{Quadríceps:3}, s:"3", r:"12", reps:[12,12,12], rest:"60s", old:true, tip:"Segure 1s em cima. Drop-set na última série.",
     how:["Ajuste o encosto para o joelho ficar alinhado com o eixo da máquina.","Estique as pernas até em cima e segure 1s.","Desça em 2 segundos."], feel:"Frente da coxa."},
-   {n:"Cadeira flexora sentada", st:"Extensora e flexora", fig:"seatCurl", fo:"Posterior de coxa", se:"—", eq:"Flexora sentada", m:{Posterior:3}, s:"3", r:"10–12", rest:"45s", old:true, tip:"Rolo logo acima do calcanhar e a almofada da coxa bem firme. Volte em 2 segundos.",
+   {n:"Cadeira flexora sentada", st:"Extensora e flexora", fig:"seatCurl", fo:"Posterior de coxa", se:"—", eq:"Flexora sentada", m:{Posterior:3}, s:"3", r:"12", reps:[12,12,12], rest:"45s", old:true, tip:"Rolo logo acima do calcanhar e a almofada da coxa bem firme. Volte em 2 segundos.",
     how:["Sente com o joelho alinhado ao eixo da máquina e trave a coxa com a almofada.","Dobre as pernas puxando o rolo para baixo e para trás.","Volte devagar até quase esticar as pernas."], feel:"Parte de trás da coxa."},
-   {n:"Cadeira adutora", st:"Adutora", pre:true, fig:"adductor", fo:"Adutores (parte interna da coxa)", se:"—", eq:"Adutora", m:{Adutores:3}, s:"3", r:"12–15", rest:"60s", tip:"Comece leve; é comum sentir bastante no dia seguinte.",
+   {n:"Cadeira adutora", st:"Adutora", pre:true, fig:"adductor", fo:"Adutores (parte interna da coxa)", se:"—", eq:"Adutora", m:{Adutores:3}, s:"3", r:"12", reps:[12,12,12], rest:"60s", tip:"Comece leve; é comum sentir bastante no dia seguinte.",
     how:["Sente com as costas apoiadas e as pernas abertas nos apoios.","Feche as pernas até as almofadas quase se tocarem.","Volte devagar até sentir o alongamento na parte interna da coxa."], feel:"Parte interna da coxa. Dá volume à coxa vista de frente."},
-   {n:"Coice de glúteo na polia", st:"Polia", pre:true, fig:"kickback", fo:"Glúteo máximo", se:"posterior de coxa", eq:"Polia baixa + tornozeleira", m:{Glúteo:3,Posterior:1}, s:"3", r:"12 cada", rest:"45s", cable:true, tip:"Em pé, segurando a máquina. Leve a perna para trás sem arquear a lombar.",
+   {n:"Coice de glúteo na polia", st:"Polia", pre:true, fig:"kickback", fo:"Glúteo máximo", se:"posterior de coxa", eq:"Polia baixa + tornozeleira", m:{Glúteo:3,Posterior:1}, s:"3", r:"12 cada", reps:[12,12,12], uni:true, rest:"45s", cable:true, tip:"Em pé, segurando a máquina. Leve a perna para trás sem arquear a lombar.",
     how:["Prenda a tornozeleira na polia baixa e no tornozelo. Fique de frente para a máquina, segurando nela.","Com o tronco levemente inclinado, leve a perna para trás e para cima, com o joelho quase reto.","Aperte o glúteo 1s em cima e volte devagar. Termine e troque de perna."], feel:"Glúteo, do lado que chuta."},
-   {n:"Panturrilha em pé na máquina", st:"Máquina de panturrilha", pre:true, fig:"calfMachine", fo:"Panturrilha", se:"—", eq:"Máquina de panturrilha", m:{Panturrilha:4}, s:"3", r:"10–12", rest:"45s", old:true, tip:"Mais carga e menos reps; na sexta tem a versão leve.",
+   {n:"Panturrilha em pé na máquina", st:"Máquina de panturrilha", pre:true, fig:"calfMachine", fo:"Panturrilha", se:"—", eq:"Máquina de panturrilha", m:{Panturrilha:4}, s:"3", r:"15", reps:[15,15,15], rest:"45s", old:true, tip:"Mais carga e menos reps; na sexta tem a versão leve.",
     how:["Ombros embaixo das almofadas, só a ponta dos pés no degrau.","Desça o calcanhar o máximo que der e segure 2s.","Suba na ponta dos pés o mais alto possível."], feel:"Panturrilha."},
   ]},
  {id:"C", day:"Qua", title:"Ombros & Braços", why:"Ombro primeiro, começando pela máquina de desenvolvimento. Depois a área de halteres (elevação lateral e rosca concentrada) e, por último, a polia com uma corda só para três exercícios, incluindo um bi-set.",
   ex:[
-   {n:"Desenvolvimento articulado na máquina", st:"Máquina de desenvolvimento", early:true, fig:"shoulderMach", fo:"Ombro (frontal e lateral)", se:"tríceps", eq:"Máquina de desenvolvimento articulado", m:{Ombros:4,Tríceps:1}, s:"4", r:"8–10", rest:"90s", old:true, tip:"Antes, uma série leve. A máquina guia o movimento, então dá para ir pesado com segurança.",
+   {n:"Desenvolvimento articulado na máquina", st:"Máquina de desenvolvimento", early:true, fig:"shoulderMach", fo:"Ombro (frontal e lateral)", se:"tríceps", eq:"Máquina de desenvolvimento articulado", m:{Ombros:4,Tríceps:1}, s:"4", r:"12/10/8/8", reps:[12,10,8,8], rest:"90s", old:true, tip:"Comece leve nas 12 repetições, que já aquecem. A máquina guia o movimento, então dá para ir pesado com segurança.",
     how:["Ajuste o banco para os pegadores ficarem na altura dos ombros.","Empurre para cima até quase esticar os braços, sem travar os cotovelos.","Desça devagar até as mãos voltarem à altura das orelhas."], feel:"Frente e lateral do ombro."},
-   {n:"Crucifixo invertido no peck deck", st:"Peck deck", pre:true, fig:"revPeck", fo:"Ombro posterior", se:"meio das costas", eq:"Peck deck", m:{Ombros:3}, s:"3", r:"15", rest:"45s", old:true, tip:"Sentado de frente para o aparelho, abra os braços na altura dos ombros.",
+   {n:"Crucifixo invertido no peck deck", st:"Peck deck", pre:true, fig:"revPeck", fo:"Ombro posterior", se:"meio das costas", eq:"Peck deck", m:{Ombros:3}, s:"3", r:"15", reps:[15,15,15], rest:"45s", old:true, tip:"Sentado de frente para o aparelho, abra os braços na altura dos ombros.",
     how:["Sente virado para o encosto, peito apoiado, segurando os pegadores à frente.","Abra os braços para trás com os cotovelos levemente dobrados.","Volte devagar até as mãos quase se encontrarem."], feel:"Parte de trás do ombro."},
-   {n:"Elevação lateral com halteres", st:"Halteres e banco", pre:true, fig:"latRaise", fo:"Ombro lateral", se:"trapézio", eq:"Halteres", m:{Ombros:4}, s:"4", r:"12–15", rest:"45s", old:true, tip:"Suba até a linha do ombro. Última série até a falha.",
+   {n:"Elevação lateral com halteres", st:"Halteres e banco", pre:true, fig:"latRaise", fo:"Ombro lateral", se:"trapézio", eq:"Halteres", m:{Ombros:4}, s:"4", r:"12", reps:[12,12,12,12], rest:"45s", old:true, tip:"Suba até a linha do ombro. Última série até a falha.",
     how:["Em pé, halteres ao lado do corpo, cotovelos levemente dobrados.","Abra os braços para os lados até a altura dos ombros.","Desça em 2 segundos."], feel:"Lateral do ombro."},
-   {n:"Rosca concentrada", st:"Halteres e banco", fig:"concentr", fo:"Bíceps (pico)", se:"—", eq:"Banco + halter", m:{Bíceps:3}, s:"3", r:"10–12 cada", rest:"60s", tip:"Logo depois da elevação lateral, aproveitando os halteres e o banco. Cotovelo apoiado na parte interna da coxa.",
+   {n:"Rosca concentrada", st:"Halteres e banco", fig:"concentr", fo:"Bíceps (pico)", se:"—", eq:"Banco + halter", m:{Bíceps:3}, s:"3", r:"12 cada", reps:[12,12,12], uni:true, rest:"60s", tip:"Logo depois da elevação lateral, aproveitando os halteres e o banco. Cotovelo apoiado na parte interna da coxa.",
     how:["Sente na ponta do banco, pernas abertas, cotovelo apoiado na parte interna da coxa.","Suba o halter até o ombro girando levemente o punho para fora.","Segure 1s e desça devagar."], feel:"Pico do bíceps."},
-   {n:"Rosca martelo na polia com corda", st:"Polia com corda", fig:"ropeCurl", fo:"Bíceps e braquial", se:"antebraço", eq:"Polia baixa + corda", m:{Bíceps:3}, s:"3", r:"10–12", rest:"—", cable:true, bi:1, chg:"Substitui a rosca bayesiana: usa a mesma polia e a mesma corda do tríceps", tip:"Bi-set com o francês: termine a série, vire de costas para a polia e já faça o tríceps.",
+   {n:"Rosca martelo na polia com corda", st:"Polia com corda", fig:"ropeCurl", fo:"Bíceps e braquial", se:"antebraço", eq:"Polia baixa + corda", m:{Bíceps:3}, s:"3", r:"12", reps:[12,12,12], rest:"—", cable:true, bi:1, chg:"Substitui a rosca bayesiana: usa a mesma polia e a mesma corda do tríceps", tip:"Bi-set com o francês: termine a série, vire de costas para a polia e já faça o tríceps.",
     how:["De frente para a polia baixa, segure as pontas da corda com as palmas viradas uma para a outra.","Suba as mãos até os ombros com os cotovelos colados no corpo.","Desça em 2 segundos."], feel:"Bíceps e a parte de fora do braço (braquial), que engrossa o braço."},
-   {n:"Tríceps francês na polia com corda", st:"Polia com corda", pre:true, fig:"frenchRope", fo:"Tríceps (cabeça longa)", se:"—", eq:"Polia baixa + corda", m:{Tríceps:3}, s:"3", r:"10–12", rest:"75s", cable:true, bi:1, tip:"Fim do bi-set. De costas para a polia, com a mesma corda da rosca. Cotovelos apontando para cima.",
+   {n:"Tríceps francês na polia com corda", st:"Polia com corda", pre:true, fig:"frenchRope", fo:"Tríceps (cabeça longa)", se:"—", eq:"Polia baixa + corda", m:{Tríceps:3}, s:"3", r:"12", reps:[12,12,12], rest:"75s", cable:true, bi:1, tip:"Fim do bi-set. De costas para a polia, com a mesma corda da rosca. Cotovelos apontando para cima.",
     how:["De costas para a polia baixa, segure a corda atrás da cabeça com os cotovelos para cima.","Estique os braços para cima e para a frente, sem mover os cotovelos.","Volte devagar até sentir o tríceps alongar."], feel:"Parte de trás do braço, perto do ombro."},
-   {n:"Tríceps na polia com corda", st:"Polia com corda", pre:true, fig:"ropePush", fo:"Tríceps (cabeça lateral)", se:"—", eq:"Polia alta + corda", m:{Tríceps:3}, s:"3", r:"12–15", rest:"60s", cable:true, old:true, tip:"Último do dia: suba a polia e use a mesma corda. Abra as pontas no fim do movimento.",
+   {n:"Tríceps na polia com corda", st:"Polia com corda", pre:true, fig:"ropePush", fo:"Tríceps (cabeça lateral)", se:"—", eq:"Polia alta + corda", m:{Tríceps:3}, s:"3", r:"12", reps:[12,12,12], rest:"60s", cable:true, old:true, tip:"Último do dia: suba a polia e use a mesma corda. Abra as pontas no fim do movimento.",
     how:["De frente para a polia alta, cotovelos colados no corpo.","Empurre a corda para baixo até esticar os braços, separando as pontas no final.","Suba controlando até os antebraços ficarem paralelos ao chão."], feel:"Lateral do tríceps."},
   ]},
  {id:"D", day:"Qui", title:"Pernas · Trás & Core", why:"Leg press com pés altos primeiro, enquanto há mais força. Depois as máquinas de posterior e glúteo, a polia com a mesma corda para dois exercícios, e abdômen no fim, já que ele ajuda a estabilizar nos outros.",
   ex:[
-   {n:"Leg press 45° com pés altos", st:"Leg press", early:true, pre:true, fig:"legPressHigh", fo:"Glúteo e posterior de coxa", se:"quadríceps", eq:"Leg press", m:{Glúteo:3,Posterior:2,Quadríceps:2}, s:"4", r:"10–12", rest:"90s", tip:"Antes, uma série leve. Pés no alto da plataforma e um pouco abertos: tira o foco da frente da coxa.",
+   {n:"Leg press 45° com pés altos", st:"Leg press", early:true, pre:true, fig:"legPressHigh", fo:"Glúteo e posterior de coxa", se:"quadríceps", eq:"Leg press", m:{Glúteo:3,Posterior:2,Quadríceps:2}, s:"4", r:"12/10/8/8", reps:[12,10,8,8], rest:"90s", tip:"Comece leve nas 12 repetições, que já aquecem. Pés no alto da plataforma e um pouco abertos tiram o foco da frente da coxa.",
     how:["Pés na parte de cima da plataforma, um pouco mais abertos que o quadril.","Desça fundo, até o quadril quase sair do banco (sem deixar sair).","Empurre pelos calcanhares."], feel:"Glúteo e parte de trás da coxa."},
-   {n:"Mesa flexora", st:"Mesa flexora", pre:true, fig:"lyingCurl", fo:"Posterior de coxa", se:"panturrilha", eq:"Mesa flexora (deitado)", m:{Posterior:3}, s:"4", r:"10–12", rest:"60s", tip:"Volte em 2 segundos. A fase lenta é onde o posterior cresce.",
+   {n:"Mesa flexora", st:"Mesa flexora", pre:true, fig:"lyingCurl", fo:"Posterior de coxa", se:"panturrilha", eq:"Mesa flexora (deitado)", m:{Posterior:3}, s:"4", r:"12", reps:[12,12,12,12], rest:"60s", tip:"Volte em 2 segundos. A fase lenta é onde o posterior cresce.",
     how:["Deite de bruços com o rolo logo acima do calcanhar e os joelhos fora do banco.","Dobre as pernas trazendo o calcanhar em direção ao bumbum.","Desça devagar sem deixar o peso bater."], feel:"Parte de trás da coxa."},
-   {n:"Cadeira abdutora", st:"Abdutora", pre:true, fig:"abductor", fo:"Glúteo médio (lateral)", se:"—", eq:"Abdutora", m:{Glúteo:3}, s:"3", r:"15–20", rest:"45s", old:true, tip:"Tronco levemente inclinado à frente para pegar mais o glúteo médio.",
+   {n:"Cadeira abdutora", st:"Abdutora", pre:true, fig:"abductor", fo:"Glúteo médio (lateral)", se:"—", eq:"Abdutora", m:{Glúteo:3}, s:"3", r:"15", reps:[15,15,15], rest:"45s", old:true, tip:"Tronco levemente inclinado à frente para pegar mais o glúteo médio.",
     how:["Sente com as almofadas por fora dos joelhos.","Abra as pernas o máximo que der e segure 1s.","Feche devagar."], feel:"Lateral do glúteo."},
-   {n:"Pull-through na polia", st:"Polia com corda", fig:"pullThrough", fo:"Glúteo", se:"posterior de coxa", eq:"Polia baixa + corda", m:{Glúteo:3,Posterior:2}, s:"3", r:"12–15", rest:"60s", cable:true, tip:"De costas para a polia, corda entre as pernas. O cabo puxa o quadril para trás.",
+   {n:"Pull-through na polia", st:"Polia com corda", fig:"pullThrough", fo:"Glúteo", se:"posterior de coxa", eq:"Polia baixa + corda", m:{Glúteo:3,Posterior:2}, s:"3", r:"12", reps:[12,12,12], rest:"60s", cable:true, tip:"De costas para a polia, corda entre as pernas. O cabo puxa o quadril para trás.",
     how:["De costas para a polia baixa, segure a corda entre as pernas e dê dois passos à frente.","Empurre o quadril para trás deixando as mãos irem entre as pernas.","Volte à posição em pé empurrando o quadril para a frente e apertando o glúteo."], feel:"Glúteo e parte de trás da coxa."},
-   {n:"Lenhador na polia", st:"Polia com corda", fig:"woodchop", fo:"Oblíquos", se:"abdômen, ombros", eq:"Polia alta + corda", m:{Abdômen:3}, s:"3", r:"12 cada lado", rest:"45s", cable:true, tip:"Na mesma polia do pull-through, mantendo a corda: só suba a polia. Puxe na diagonal girando o tronco.",
+   {n:"Lenhador na polia", st:"Polia com corda", fig:"woodchop", fo:"Oblíquos", se:"abdômen, ombros", eq:"Polia alta + corda", m:{Abdômen:3}, s:"3", r:"12 cada", reps:[12,12,12], uni:true, rest:"45s", cable:true, tip:"Na mesma polia do pull-through, mantendo a corda: só suba a polia. Puxe na diagonal girando o tronco.",
     how:["De lado para a polia alta, segure o pegador com as duas mãos acima do ombro.","Puxe em diagonal até o lado oposto do quadril, girando o tronco.","Volte controlando. Termine e troque de lado."], feel:"Laterais do abdômen."},
-   {n:"Panturrilha unilateral no degrau", st:"Degrau e halter", pre:true, fig:"calfStep", fo:"Panturrilha", se:"—", eq:"Degrau + halter", m:{Panturrilha:3}, s:"3", r:"15 cada", rest:"30s", tip:"Versão leve da semana. Uma mão na parede para equilíbrio.",
+   {n:"Panturrilha unilateral no degrau", st:"Degrau e halter", pre:true, fig:"calfStep", fo:"Panturrilha", se:"—", eq:"Degrau + halter", m:{Panturrilha:3}, s:"3", r:"15 cada", reps:[15,15,15], uni:true, rest:"30s", tip:"Versão leve da semana. Uma mão na parede para equilíbrio.",
     how:["Ponta de um pé no degrau, halter na mão do mesmo lado, outra mão na parede.","Desça o calcanhar o máximo possível.","Suba na ponta do pé e segure 1s. Troque de perna."], feel:"Panturrilha."},
-   {n:"Abdominal infra", st:"Colchonete", fig:"legRaise", fo:"Abdômen inferior", se:"flexores do quadril", eq:"Colchonete", m:{Abdômen:3}, s:"3", r:"12–15", rest:"45s", tip:"Mãos sob o quadril. Se a lombar sair do chão, dobre um pouco os joelhos.",
+   {n:"Abdominal infra", st:"Colchonete", fig:"legRaise", fo:"Abdômen inferior", se:"flexores do quadril", eq:"Colchonete", m:{Abdômen:3}, s:"3", r:"15", reps:[15,15,15], rest:"45s", tip:"Mãos sob o quadril. Se a lombar sair do chão, dobre um pouco os joelhos.",
     how:["Deite de costas com as mãos embaixo do quadril e as pernas esticadas.","Suba as pernas juntas até formar 90° com o tronco.","Desça devagar e pare a um palmo do chão."], feel:"Parte de baixo do abdômen."},
   ]},
  {id:"E", day:"Sex", title:"Torso · Volume", why:"Supino reto primeiro, depois peck deck para fechar o peito. Puxada e remada baixa em seguida (costumam ficar no mesmo conjunto) e o bi-set de braço na polia alta para terminar.",
   ex:[
-   {n:"Supino reto com barra", st:"Banco com barra", early:true, pre:true, fig:"benchBar", fo:"Peito (meio)", se:"tríceps, ombro frontal", eq:"Banco + barra", m:{Peito:4,Tríceps:1}, s:"4", r:"8–10", rest:"90s", old:true, tip:"Antes, uma série leve. Mais reps e menos carga que o supino de segunda. Na barra, pare 1–2 reps antes da falha.",
+   {n:"Supino reto com barra", st:"Banco com barra", early:true, pre:true, fig:"benchBar", fo:"Peito (meio)", se:"tríceps, ombro frontal", eq:"Banco + barra", m:{Peito:4,Tríceps:1}, s:"4", r:"12/10/8/8", reps:[12,10,8,8], rest:"90s", old:true, tip:"A série de 12 é leve e já serve de aquecimento. Na barra, pare 1–2 repetições antes da falha.",
     how:["Deitado, olhos embaixo da barra, pés firmes no chão, escápulas apertadas no banco.","Desça a barra até a linha do mamilo.","Empurre para cima sem travar os cotovelos."], feel:"Peito e tríceps."},
-   {n:"Crucifixo no peck deck", st:"Peck deck", pre:true, fig:"peck", fo:"Peito (interno)", se:"ombro frontal", eq:"Peck deck", m:{Peito:3}, s:"3", r:"12–15", rest:"60s", old:true, tip:"Última série com drop-set: tire 30% da carga e vá até a falha.",
+   {n:"Crucifixo no peck deck", st:"Peck deck", pre:true, fig:"peck", fo:"Peito (interno)", se:"ombro frontal", eq:"Peck deck", m:{Peito:3}, s:"3", r:"12", reps:[12,12,12], rest:"60s", old:true, tip:"Última série com drop-set: tire 30% da carga e vá até a falha.",
     how:["Ajuste o banco para os cotovelos ficarem na altura do peito.","Feche os braços até as almofadas se encontrarem e segure 1s.","Abra devagar até sentir o peito alongar."], feel:"Meio do peito."},
-   {n:"Puxada aberta pronada", st:"Pulley e remada baixa", pre:true, fig:"widePull", fo:"Dorsal (largura)", se:"bíceps, ombro posterior", eq:"Pulley + barra longa", m:{Costas:3,Bíceps:1}, s:"3", r:"10–12", rest:"60s", cable:true, tip:"Pegada aberta, palmas para a frente. Sentado, sem balançar o tronco.",
+   {n:"Puxada aberta pronada", st:"Pulley e remada baixa", pre:true, fig:"widePull", fo:"Dorsal (largura)", se:"bíceps, ombro posterior", eq:"Pulley + barra longa", m:{Costas:3,Bíceps:1}, s:"3", r:"12/10/8", reps:[12,10,8], rest:"60s", cable:true, tip:"Pegada aberta, palmas para a frente. Sentado, sem balançar o tronco.",
     how:["Sente com as coxas presas, segure a barra bem aberta com as palmas para a frente.","Puxe a barra até a parte alta do peito, abrindo o peito e levando os cotovelos para baixo.","Suba devagar até esticar os braços."], feel:"Laterais das costas, deixa as costas mais largas."},
-   {n:"Remada baixa sentada com triângulo", st:"Pulley e remada baixa", pre:true, fig:"rowSeat", fo:"Dorsal e meio das costas", se:"bíceps, ombro posterior", eq:"Máquina de remada baixa", m:{Costas:4,Bíceps:1}, s:"3", r:"10–12", rest:"75s", cable:true, old:true, tip:"Peito aberto, puxe até o umbigo sem jogar o tronco para trás.",
+   {n:"Remada baixa sentada com triângulo", st:"Pulley e remada baixa", pre:true, fig:"rowSeat", fo:"Dorsal e meio das costas", se:"bíceps, ombro posterior", eq:"Máquina de remada baixa", m:{Costas:4,Bíceps:1}, s:"3", r:"12/10/8", reps:[12,10,8], rest:"75s", cable:true, old:true, tip:"Peito aberto, puxe até o umbigo sem jogar o tronco para trás.",
     how:["Sente com os pés no apoio e joelhos levemente dobrados, segurando o triângulo.","Puxe até o umbigo, levando os cotovelos para trás e junto ao corpo.","Estique os braços devagar, deixando os ombros irem um pouco à frente."], feel:"Costas, dos lados e no meio."},
-   {n:"Rosca direta com barra W", st:"Polia alta + barra W", pre:true, fig:"curlW", fo:"Bíceps", se:"antebraço", eq:"Barra W", m:{Bíceps:3}, s:"2", r:"12–15", rest:"—", old:true, bi:3, tip:"Bi-set de fechamento. Sem balançar o tronco.",
+   {n:"Rosca direta com barra W", st:"Polia alta + barra W", pre:true, fig:"curlW", fo:"Bíceps", se:"antebraço", eq:"Barra W", m:{Bíceps:3}, s:"3", r:"12", reps:[12,12,12], rest:"—", old:true, bi:3, tip:"Bi-set de fechamento. Sem balançar o tronco.",
     how:["Em pé, barra W na pegada da parte inclinada, cotovelos ao lado do corpo.","Suba a barra até o peito sem mover os cotovelos.","Desça em 2 segundos."], feel:"Bíceps."},
-   {n:"Tríceps na polia com barra V", st:"Polia alta + barra V", pre:true, fig:"vbarPush", fo:"Tríceps", se:"—", eq:"Polia alta + barra V", m:{Tríceps:3}, s:"2", r:"12–15", rest:"60s", cable:true, old:true, bi:3, tip:"Fim do bi-set. Cotovelos colados no corpo.",
+   {n:"Tríceps na polia com barra V", st:"Polia alta + barra V", pre:true, fig:"vbarPush", fo:"Tríceps", se:"—", eq:"Polia alta + barra V", m:{Tríceps:3}, s:"3", r:"12", reps:[12,12,12], rest:"60s", cable:true, old:true, bi:3, tip:"Fim do bi-set. Cotovelos colados no corpo.",
     how:["De frente para a polia alta, barra V nas mãos, cotovelos junto ao corpo.","Empurre até esticar os braços.","Suba até os antebraços ficarem paralelos ao chão."], feel:"Tríceps."},
   ]},
 ];
@@ -505,9 +695,9 @@ function skeleton(g,v){
   const far=mk("g",{class:v==="front"?"":"far"},g);
   o.leg2=mk("polyline",{class:"lb"},far); o.arm2=mk("polyline",{class:"lb"},far);
   const near=mk("g",{},g);
-  if(v==="front"){ o.hips=mk("line",{class:"lb"},near); o.shl=mk("line",{class:"lb"},near); }
-  o.torso=mk("line",{class:"lb"},near); o.leg1=mk("polyline",{class:"lb"},near); o.arm1=mk("polyline",{class:"lb"},near);
-  o.head=mk("circle",{class:"hd",r:9},near);
+  if(v==="front"){ o.hips=mk("line",{class:"lb tr"},near); o.shl=mk("line",{class:"lb tr"},near); }
+  o.torso=mk("line",{class:"lb tr"},near); o.leg1=mk("polyline",{class:"lb"},near); o.arm1=mk("polyline",{class:"lb"},near);
+  o.head=mk("circle",{class:"hd",r:10.5},near);
   return o;
 }
 function propsEls(g,props){
@@ -567,15 +757,17 @@ function drawProps(list,P){
 }
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 let FIGS=[];
-function mountFig(svg,key){
+function mountFig(svg,key,still){
   const d=FIG[key]; if(!d) return;
   const v=d.v||"side";
   const A=complete(d.a,v), B=complete({...d.a,...d.b},v);
   let html=""; if(d.ground!==false) html+='<line class="gr" x1="4" y1="148" x2="156" y2="148"/>';
+  if(d.gd) html+=d.gd.map(g=>`<line class="gd" x1="${g[0]}" y1="${g[1]}" x2="${g[2]}" y2="${g[3]}"/><text class="gdt" x="${g[2]-2}" y="${g[1]-4}" text-anchor="end">${g[4]}</text>`).join("");
   svg.innerHTML=html+(d.eq||"");
   if(REDUCED){ const gg=mk("g",{class:"ghost"},svg); const og=skeleton(gg,v); drawPose(og,A,v); drawProps(propsEls(gg,d.props),A); }
   const g=mk("g",{},svg); const o=skeleton(g,v); const pl=propsEls(g,d.props);
   const f={svg,o,pl,A,B,v,vis:true,off:Math.random()*0.15};
+  if(still!=null){ frame(f,still); return; }
   frame(f, REDUCED?1:0);
   FIGS.push(f);
   if(io) io.observe(svg);
@@ -689,7 +881,10 @@ function pushNext(id){ if(sb&&USER) sb.from("treino_app_estado").upsert({user_id
 
 /* ---------- utilidades ---------- */
 const W=id=>PLAN.find(w=>w.id===id);
-const nSets=e=>parseInt(e.s,10)||3;
+const nSets=e=>e.reps?e.reps.length:(parseInt(e.s,10)||3);
+const isPyr=e=>!!(e.reps&&new Set(e.reps).size>1);
+const targets=e=>e.reps||Array(nSets(e)).fill(repTop(e));
+const rxText=e=>isPyr(e)?`${e.reps.length} séries · ${e.reps.join("/")}`:`${nSets(e)} × ${e.reps?e.reps[0]:e.r}${e.uni?" cada":""}`;
 const repTop=e=>{ const m=String(e.r).match(/\d+/g); return m?+m[m.length-1]:0; };
 const restSec=e=>parseInt(e.rest,10)||0;
 const num=v=>{ const n=parseFloat(String(v).replace(",",".")); return isFinite(n)?n:null; };
@@ -697,7 +892,7 @@ const fmtKg=n=>n==null?"":(Math.round(n*10)/10).toString().replace(".",",");
 const ddmm=ts=>{ const d=new Date(ts); return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0"); };
 const dayName=ts=>WD[new Date(ts).getDay()];
 const nextOf=id=>ORDER[(ORDER.indexOf(id)+1)%ORDER.length];
-function exMin(e,first){ const sets=nSets(e), uni=/cada/.test(e.r), work=uni?80:45; return (sets*(work+restSec(e))+60+(first?90:0))/60; }
+function exMin(e,first){ const sets=nSets(e), work=e.uni?80:45; return (sets*(work+restSec(e))+60)/60; }
 const woMin=w=>Math.round(w.ex.reduce((a,e,i)=>a+exMin(e,i===0),0));
 function stations(w){ const g=[]; w.ex.forEach((e,i)=>{ const l=g[g.length-1]; if(l&&l.st===e.st){l.idx.push(i);} else g.push({st:e.st,idx:[i]}); }); return g; }
 const primary=w=>{ const s=[]; w.ex.forEach(e=>Object.entries(e.m).forEach(([k,n])=>{ if(n>=3&&!s.includes(k)) s.push(k); })); return s; };
@@ -730,10 +925,13 @@ function startRest(sec,label){
 }
 function nowCue(label){ REST={end:0,total:0,label,go:true,cue:true,goAt:Date.now()}; drawRest(); clearInterval(restTick); restTick=setInterval(drawRest,250); }
 function stopRest(){ REST=null; clearInterval(restTick); $("#restbar").hidden=true; document.body.classList.remove("has-rest"); }
+let AC=null, SOUND=true; try{ SOUND=localStorage.getItem("diario-som")!=="0"; }catch(e){}
+document.addEventListener("pointerdown",()=>{ try{ if(!AC){ const C=window.AudioContext||window.webkitAudioContext; if(C) AC=new C(); } else if(AC.state==="suspended") AC.resume(); }catch(e){} },{passive:true});
+function beep(){ if(!SOUND||!AC) return; try{ [0,.22].forEach(d=>{ const o=AC.createOscillator(), g=AC.createGain(); o.frequency.value=880; o.connect(g); g.connect(AC.destination); const t0=AC.currentTime+d; g.gain.setValueAtTime(.0001,t0); g.gain.exponentialRampToValueAtTime(.35,t0+.02); g.gain.exponentialRampToValueAtTime(.0001,t0+.16); o.start(t0); o.stop(t0+.18); }); }catch(e){} }
 function drawRest(){
   const el=$("#restbar"); if(!REST){ el.hidden=true; return; }
   const left=REST.end-Date.now();
-  if(!REST.go && left<=0){ REST.go=true; REST.goAt=Date.now(); try{ navigator.vibrate&&navigator.vibrate([220,120,220]); }catch(e){} }
+  if(!REST.go && left<=0){ REST.go=true; REST.goAt=Date.now(); try{ navigator.vibrate&&navigator.vibrate([220,120,220]); }catch(e){} beep(); }
   if(REST.go && Date.now()-REST.goAt>9000){ stopRest(); return; }
   el.hidden=false; document.body.classList.add("has-rest");
   const s=Math.max(0,Math.ceil(left/1000)), mm=Math.floor(s/60), ss=String(s%60).padStart(2,"0");
@@ -796,6 +994,24 @@ function renderHome(){
   return h;
 }
 
+function evolution(e){
+  const rows=[]; for(const h of S.hist){ const x=h.ex.find(q=>q.n===e.n); if(x){ const kg=Math.max(...x.sets.map(s=>s.kg||0)); rows.push({d:h.end,kg,reps:x.sets.map(s=>s.reps??"–").join("/")}); } if(rows.length>=4) break; }
+  return rows;
+}
+function infoHTML(e){
+  const D=DETAIL[e.n]||{}, li=a=>a&&a.length?`<ul>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"";
+  const ev=evolution(e);
+  return `<div class="infob">
+    <div class="stages">${[["Início",0],["Meio",.5],["Fim",1]].map(([l,v])=>`<figure><span class="sth"><svg class="fig" viewBox="0 0 160 160" data-still="${e.fig}" data-v="${v}" aria-hidden="true"></svg></span><figcaption>${l}</figcaption></figure>`).join("")}</div>
+    <div class="isec"><h4>Passo a passo</h4><ol>${e.how.map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>
+    ${D.aj?`<div class="isec"><h4>Ajuste e posição</h4>${li(D.aj)}</div>`:""}
+    ${D.pg?`<div class="isec"><h4>Pegada, braços e ombros</h4>${li(D.pg)}</div>`:""}
+    ${D.am?`<div class="isec"><h4>Até onde ir</h4>${li(D.am)}</div>`:""}
+    ${D.er?`<div class="isec bad"><h4>Evite</h4>${li(D.er)}</div>`:""}
+    <div class="isec"><h4>Onde sentir</h4><p>${esc(e.feel)}</p></div>
+    ${ev.length&&!BW.has(e.n)?`<div class="isec"><h4>Sua evolução</h4><div class="evo">${ev.map(r=>`<span><b>${fmtKg(r.kg)} kg</b><i>${ddmm(r.d)} · ${r.reps}</i></span>`).join("")}</div></div>`:""}
+  </div>`;
+}
 function exHeader(w,e,i,ses){
   let ring="";
   if(ses){ const r=S.active.sets[i], d=r.filter(s=>s.ok).length, p=Math.round(d/r.length*100);
@@ -803,8 +1019,8 @@ function exHeader(w,e,i,ses){
   return `<button class="exh" ${ses?`data-x="${i}" aria-expanded="${S.active.open===i}"`:''} type="button">
     <span class="th"><svg class="fig" viewBox="0 0 160 160" data-fig="${e.fig}" role="img" aria-label="Animação: ${esc(e.n)}"></svg></span>
     <span class="tt"><span class="nm">${esc(e.n)}</span><span class="fo">${esc(e.fo)}</span>
-      <span class="rx">${e.s} × ${esc(e.r)}${restSec(e)?` · ${restSec(e)}s`:' · sem descanso'}</span>
-      ${e.early||e.bi?`<span style="display:flex;gap:4px;flex-wrap:wrap">${e.early?'<span class="tagx e">Fazer no início</span>':''}${e.bi?'<span class="tagx b">Bi-set</span>':''}</span>`:''}
+      <span class="rx">${rxText(e)}${restSec(e)?` · ${restSec(e)}s`:' · sem descanso'}</span>
+      ${e.bi?`<span style="display:flex;gap:4px;flex-wrap:wrap"><span class="tagx b">Bi-set</span></span>`:''}
     </span>${ring}</button>`;
 }
 function renderSession(){
@@ -820,11 +1036,12 @@ function renderSession(){
       h+=`<article class="exc ${exDone(i)?'done':''}" id="ex-${i}">${exHeader(w,e,i,true)}
         <div class="exb" ${open?'':'hidden'}>
           <p class="tip">${esc(e.tip)}</p>
-          <details class="how"><summary>Como fazer</summary><ol>${e.how.map(x=>`<li>${esc(x)}</li>`).join("")}</ol><p><b>Onde sentir:</b> ${esc(e.feel)}</p></details>
+          ${isPyr(e)?`<p class="pyr"><b>Pirâmide:</b> suba a carga a cada série (${e.reps.join(" → ")} repetições).</p>`:''}
+          <details class="info" id="info-${i}"><summary><span class="ii">i</span>Como executar</summary>${infoHTML(e)}</details>
           <div class="sets"><div class="shead"><span>Série</span><span>${bw?'':'Carga'}</span><span>Reps</span><span></span></div>
-          ${rows.map((s,j)=>`<div class="srow ${s.ok?'ok':''}" data-i="${i}" data-j="${j}"><span class="n">${j+1}</span>
+          ${rows.map((s,j)=>`<div class="srow ${s.ok?'ok':''}" data-i="${i}" data-j="${j}"><span class="n">${j+1}<small>${targets(e)[j]}${e.uni?'/lado':''}</small></span>
             ${bw?'<span class="bw">Peso corporal</span>':`<span class="fld"><input id="kg-${i}-${j}" data-k="kg" inputmode="decimal" autocomplete="off" placeholder="0" value="${esc(s.kg)}" aria-label="Carga da série ${j+1}"><em>kg</em></span>`}
-            <span class="fld"><input id="rp-${i}-${j}" data-k="reps" inputmode="numeric" autocomplete="off" placeholder="${repTop(e)||''}" value="${esc(s.reps)}" aria-label="Repetições da série ${j+1}"><em>rep</em></span>
+            <span class="fld"><input id="rp-${i}-${j}" data-k="reps" inputmode="numeric" autocomplete="off" placeholder="${targets(e)[j]||''}" value="${esc(s.reps)}" aria-label="Repetições da série ${j+1}"><em>rep</em></span>
             <button class="ck" data-ck aria-pressed="${s.ok}" aria-label="Concluir série ${j+1}">${I.check}</button></div>`).join("")}
           </div>
           ${lastLine(e)?`<div class="last">${lastLine(e)}</div>`:''}
@@ -847,8 +1064,8 @@ function renderPlan(){
       <li>Toque em <b>Iniciar</b> no próximo treino.</li>
       <li>Abra cada exercício, confira a carga (vem preenchida com a da última vez) e toque no <b>✓</b> ao terminar cada série. O cronômetro de descanso começa sozinho.</li>
       <li>Ao final, toque em <b>Concluir treino</b>. As cargas ficam salvas para a próxima vez e o app passa a sugerir o treino seguinte.</li></ol></div></details>
-    <details><summary>Subir a carga</summary><div class="a"><p><b>Dupla progressão:</b> quando fizer o número máximo de repetições em todas as séries, suba a carga na próxima vez. Se preencher as repetições, o app avisa no resumo.</p><p>Termine cada série sentindo que faria só mais 1 ou 2. Falha só na última série dos exercícios em máquina ou polia.</p></div></details>
-    <details><summary>Ordem e estações</summary><div class="a"><p>Pesados primeiro (marcados <b>Fazer no início</b>), depois os isolados. Exercícios no mesmo aparelho ficam juntos numa <b>estação</b>; na polia, a mesma corda serve para vários.</p><p><b>Aparelho ocupado?</b> Pule para a próxima estação e volte depois. Só não deixe os de início para o fim.</p></div></details>
+    <details><summary>Séries e repetições</summary><div class="a"><p><b>Pirâmide (12 → 10 → 8):</b> nos exercícios principais, a primeira série é mais leve e já serve de aquecimento. Suba a carga a cada série. Quando completar todas as repetições em todas as séries, comece um pouco mais pesado na próxima vez.</p><p><b>3 × 12:</b> mesma carga em todas as séries. Completou as 12 nas três? Suba o peso.</p><p><b>15 repetições:</b> só panturrilha, abdominal, abdutora e crucifixo invertido.</p><p>Termine cada série sentindo que faria só mais 1 ou 2. O resumo no fim do treino avisa onde subir a carga.</p></div></details>
+    <details><summary>Ordem e estações</summary><div class="a"><p>A ordem da lista já é a ordem recomendada: pesados primeiro, isolados depois. Exercícios no mesmo aparelho ficam juntos numa <b>estação</b>; na polia, a mesma corda serve para vários.</p><p><b>Aparelho ocupado?</b> Pule para o próximo da lista e volte depois. Se puder, mantenha o primeiro exercício do dia no começo, porque é o mais pesado.</p></div></details>
     <details><summary>Descanso entre treinos</summary><div class="a"><p>Torso na segunda e na sexta, pernas na terça e na quinta, ombro e braço na quarta. Cada músculo descansa pelo menos 48 horas antes de ser foco de novo. Se faltar um dia, siga a sequência: o app sempre sugere o próximo da fila.</p></div></details>
     <details><summary>Fora da academia</summary><div class="a"><p>Proteína perto de 1,6 a 2 g por kg por dia (o whey ajuda), comer um pouco acima do que gasta e dormir bem. Treinando às 22h, deixe de 60 a 90 minutos antes de deitar.</p></div></details>
   </div></section>`;
@@ -889,6 +1106,7 @@ function renderMore(){
    <div class="set-card"><h3>Conta na nuvem</h3>${accountCard()}</div>
    <div class="set-card"><h3>Próximo treino</h3><p>O app avança sozinho ao concluir um treino. Mude aqui se quiser pular ou repetir um dia.</p>
      <div class="chips">${ORDER.map(id=>`<button class="chipb ${S.next===id?'on':''}" data-setnext="${id}" aria-pressed="${S.next===id}">${id}</button>`).join("")}</div></div>
+   <div class="set-card"><h3>Som do descanso</h3><p>Dois bipes curtos quando o descanso acaba. No iPhone é o único aviso, porque ele não vibra.</p><div class="chips">${[["1","Ligado"],["0","Desligado"]].map(([k,l])=>`<button class="chipb ${(SOUND?"1":"0")===k?'on':''}" style="font:600 14px var(--f-body);padding:0 14px" data-sound="${k}">${l}</button>`).join("")}</div></div>
    <div class="set-card"><h3>Tema</h3><div class="chips">${[["auto","Automático"],["dark","Escuro"],["light","Claro"]].map(([k,l])=>`<button class="chipb ${th===k?'on':''}" style="font:600 14px var(--f-body);padding:0 14px" data-theme-set="${k}">${l}</button>`).join("")}</div></div>
    <div class="set-card"><h3>Backup</h3><p>Com a conta conectada, tudo já fica guardado na nuvem. Este backup em texto é uma segurança extra, útil também se você usar o app sem conta.</p>
      <div class="row2"><button class="btn ghost sm" data-copy>Copiar backup</button><button class="btn ghost sm" data-restore>Restaurar</button></div>
@@ -904,7 +1122,7 @@ function closeModal(){ const m=$("#modal"); m.hidden=true; m.innerHTML=""; }
 function previewSheet(id){
   const w=W(id);
   openModal(`<div class="eyebrow">Treino ${w.id} · ${w.day} · ~${woMin(w)} min</div><h2>${esc(w.title)}</h2><p>${esc(w.why)}</p>
-    <div class="hist">${w.ex.map((e,i)=>`<div class="hex" style="grid-template-columns:auto 1fr auto;align-items:baseline"><b class="mono" style="color:var(--faint)">${i+1}</b><span>${esc(e.n)}<br><span style="color:var(--accent);font-size:12px;font-weight:700">${esc(e.fo)}</span></span><span>${e.s}×${esc(e.r)}</span></div>`).join("")}</div>
+    <div class="hist">${w.ex.map((e,i)=>`<div class="hex" style="grid-template-columns:auto 1fr auto;align-items:baseline"><b class="mono" style="color:var(--faint)">${i+1}</b><span>${esc(e.n)}<br><span style="color:var(--accent);font-size:12px;font-weight:700">${esc(e.fo)}</span></span><span>${isPyr(e)?e.reps.join("/"):nSets(e)+"×"+targets(e)[0]+(e.uni?" cada":"")}</span></div>`).join("")}</div>
     <div class="row2"><button class="btn ghost" data-close>Fechar</button><button class="btn" data-start="${w.id}">${I.play}Iniciar</button></div>`);
 }
 
@@ -917,6 +1135,7 @@ function render(){
   else{ inSession=false; app.innerHTML= tab==="plan"?renderPlan(): tab==="hist"?renderHist(): tab==="more"?renderMore(): renderHome(); }
   document.querySelectorAll("#nav [data-tab]").forEach(b=>{ b.classList.toggle("on",b.dataset.tab===tab); b.setAttribute("aria-current",b.dataset.tab===tab?"page":"false"); });
   document.querySelectorAll("#app svg[data-fig]").forEach(s=>mountFig(s,s.dataset.fig));
+  document.querySelectorAll("#app svg[data-still]").forEach(s=>mountFig(s,s.dataset.still,+s.dataset.v));
   tickClock();
 }
 function tickClock(){ const c=$("#clock"); if(!c||!S.active) return; const s=Math.floor((Date.now()-S.active.start)/1000); const h=Math.floor(s/3600), m=Math.floor(s%3600/60), ss=String(s%60).padStart(2,"0"); c.textContent=h?`${h}:${String(m).padStart(2,"0")}:${ss}`:`${m}:${ss}`; }
@@ -954,8 +1173,8 @@ function finishSession(){
     if(!done.length) return;
     ex.push({n:e.n,sets:done});
     S.last[e.n]={date:end,sets:a.sets[i].map(s=>({kg:num(s.kg),reps:num(s.reps)}))};
-    const top=repTop(e);
-    if(done.length===a.sets[i].length && top && done.every(s=>s.reps!=null&&s.reps>=top) && !BW.has(e.n)) ups.push(e.n);
+    const tg=targets(e);
+    if(done.length===a.sets[i].length && a.sets[i].every((s,j)=>num(s.reps)!=null&&num(s.reps)>=tg[j]) && !BW.has(e.n)) ups.push(e.n);
   });
   const sess={id:end,w:w.id,start:a.start,end,ex};
   if(ex.length){ S.hist.unshift(sess); S.queue.push(payload(sess,nextOf(w.id))); }
@@ -992,6 +1211,7 @@ document.addEventListener("click",ev=>{
   const rb=t.closest("[data-rest]"); if(rb){ const k=rb.dataset.rest; if(k==="add"&&REST){ REST.end+=15000; REST.total+=15000; drawRest(); } else stopRest(); return; }
   const sn=t.closest("[data-setnext]"); if(sn){ S.next=sn.dataset.setnext; save(); pushNext(S.next); render(); return; }
   if(t.closest("[data-sync]")){ syncAll(); return; }
+  const sd=t.closest("[data-sound]"); if(sd){ SOUND=sd.dataset.sound==="1"; try{ localStorage.setItem("diario-som",SOUND?"1":"0"); }catch(e){} if(SOUND){ try{ const C=window.AudioContext||window.webkitAudioContext; if(!AC&&C) AC=new C(); }catch(e){} beep(); } render(); return; }
   if(t.closest("[data-logout]")){ if(sb) sb.auth.signOut().finally(()=>{ USER=null; render(); }); return; }
   const ts=t.closest("[data-theme-set]"); if(ts){ const k=ts.dataset.themeSet; try{ localStorage.setItem(THEME_KEY,k); }catch(e){} applyTheme(); render(); return; }
   if(t.closest("[data-copy]")){ const txt=JSON.stringify({app:"diario-treino",v:1,at:Date.now(),data:{next:S.next,last:S.last,hist:S.hist}}); const ta=$("#bk"); const msg=$("#bkmsg");
@@ -1004,7 +1224,7 @@ document.addEventListener("input",ev=>{
   const inp=ev.target; if(!inp.matches(".srow input")) return;
   const r=inp.closest(".srow"), i=+r.dataset.i, j=+r.dataset.j, k=inp.dataset.k;
   S.active.sets[i][j][k]=inp.value.replace(/[^\d.,]/g,"");
-  if(k==="kg"){ for(let q=j+1;q<S.active.sets[i].length;q++){ const s=S.active.sets[i][q]; if(!s.ok&&!s.touched){ s.kg=inp.value; const el=$(`#kg-${i}-${q}`); if(el) el.value=inp.value; } } S.active.sets[i][j].touched=true; }
+  if(k==="kg" && !isPyr(W(S.active.w).ex[i])){ for(let q=j+1;q<S.active.sets[i].length;q++){ const s=S.active.sets[i][q]; if(!s.ok&&!s.touched){ s.kg=inp.value; const el=$(`#kg-${i}-${q}`); if(el) el.value=inp.value; } } S.active.sets[i][j].touched=true; }
   save();
 });
 document.addEventListener("focusin",ev=>{ if(ev.target.matches(".srow input")) setTimeout(()=>{ try{ ev.target.select(); }catch(e){} },30); });
