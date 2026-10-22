@@ -1,6 +1,6 @@
 // Diário de Treino: guarda o app no celular para abrir sem internet.
 // Ao publicar uma nova versão do index.html, troque o número abaixo.
-const CACHE = "diario-treino-v4";
+const CACHE = "diario-treino-v5";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png", "./supabase.js"];
 
 self.addEventListener("install", e => {
